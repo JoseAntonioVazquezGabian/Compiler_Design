@@ -38,6 +38,7 @@ namespace Buttercup {
         PRINT,
         THEN,
         TRUE,
-        ILLEGAL_CHAR
+        ILLEGAL_CHAR,
+        MULTILINECOMMENT
     }
 }
