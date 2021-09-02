@@ -16,14 +16,14 @@ namespace Falak {
 
         static readonly Regex regex = new Regex(
             @"
-                (?<Comment>     #*       )
-              | (?<MultiComment> ^<#((\s|\S)?)*(.*)#>$  )
+                (?<Comment>     \#*       )
+              | (?<MultiComment> <\#(.|\n)*?\#>  )
               | (?<Newline>     \n       )
               | (?<WhiteSpace>  \s       )     # Must go after Newline.
-              | (?<And>         [&&]     )
-              | (?<Or>          [||]     )
-              | (?<Less>        [<]      )
-              | (?<Plus>       [+]       )
+              | (?<And>         [&][&]   )
+              | (?<Or>          [|][|]   )
+              | (?<Less>        [<]      ) # Agregar todas las variantes antes que este
+              | (?<Plus>       [+]       )  
               | (?<Mul>        [*]       )
               | (?<Neg>        [-]       )
               | (?<ParLeft>    [(]       )
