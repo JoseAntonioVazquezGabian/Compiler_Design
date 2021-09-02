@@ -55,6 +55,10 @@ namespace Falak {
 
         static readonly IDictionary<string, TokenCategory> tokenMap =
             new Dictionary<string, TokenCategory>() {
+                {"Comment", TokenCategory.COMMENT},
+                {"MultiComment", TokenCategory.MULTILINECOMMENT},
+                {"Newline", TokenCategory.NEWLINE},
+                {"WhiteSpace", TokenCategory.WHITESPACE},
                 {"And", TokenCategory.AND},
                 {"Or", TokenCategory.OR},
                 {"Less", TokenCategory.LESS},
@@ -68,23 +72,19 @@ namespace Falak {
                 {"False", TokenCategory.FALSE},
                 {"IntLiteral", TokenCategory.INT_LITERAL},
                 {"Bool", TokenCategory.BOOL},
-                {"End", TokenCategory.END},
                 {"If", TokenCategory.IF},
-                {"While", TokenCategory.WHILE},
-                {"Else", TokenCategory.ELSE},
                 {"Elseif", TokenCategory.ELSEIF},
                 {"Return", TokenCategory.RETURN},
+                {"While", TokenCategory.WHILE},
+                {"Else", TokenCategory.ELSE},
+                {"Break", TokenCategory.BREAK},
+                {"Var", TokenCategory.VAR},
                 {"Inc", TokenCategory.INC},
                 {"Dec", TokenCategory.DEC},
-                {"Var", TokenCategory.VAR},
-                {"Break", TokenCategory.BREAK},
                 {"Do", TokenCategory.DO},
                 {"Int", TokenCategory.INT},
                 {"Print", TokenCategory.PRINT},
-                {"Then", TokenCategory.THEN},
-                {"Identifier", TokenCategory.IDENTIFIER},
-                {"Comment", TokenCategory.COMMENT},
-                {"MultiComment", TokenCategory.MULTILINECOMMENT}
+                {"Identifier", TokenCategory.IDENTIFIER}
             };
 
         public Scanner(string input) {
