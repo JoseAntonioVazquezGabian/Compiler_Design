@@ -16,22 +16,37 @@ namespace Falak {
 
         static readonly Regex regex = new Regex(
             @"
-                (?<Comment>     \#*       )
-              | (?<MultiComment> <\#(.|\n)*?\#>  )
-              | (?<Newline>     \n       )
-              | (?<WhiteSpace>  \s       )     # Must go after Newline.
+                (?<Compare>    [=][=]    )
+              | (?<Assign>     [=]       )
+              | (?<MultiComment> [<][\#](.|\n)*?[\#][>]$  )
+              | (?<Comment>     [\#].*$  )
+              | (?<LessEqual>  [<][=]    )
+              | (?<MoreEqual>  [>][=]    )
+              | (?<Different> [!][=]     )
+              | (?<Var>        var\b     )
               | (?<And>         [&][&]   )
-              | (?<Or>          [|][|]   )
+              | (?<Or>          [|][|]|[\^]   )
               | (?<Less>        [<]      ) # Agregar todas las variantes antes que este
+              | (?<More>        [>]      )
               | (?<Plus>       [+]       )  
               | (?<Mul>        [*]       )
-              | (?<Neg>        [-]       )
+              | (?<Minus>      [-]       )
+              | (?<Div>        [/]       )
+              | (?<Mod>        [%]       )
+              | (?<Comma>      [,]       )
+              | (?<Semicolon>  [;]       )
               | (?<ParLeft>    [(]       )
               | (?<ParRight>   [)]       )
-              | (?<Assign>     [=]       )
+              | (?<SquareBracketLeft> [\[]  )
+              | (?<SquareBracketRight> [\]] )
+              | (?<CurlyRigth>  [}]      )
+              | (?<CurlyLeft>   [{]      )
+              | (?<Char>    [']([\\]([nrt\'\\""\\]|u[\dA-Fa-f]{6})|[^\\])['] )
+              | (?<String>) ""([^""\n\\]|\\([nrt\\'""]|u[0-9a-fA-F]{6}))*""
               | (?<True>       true\b    )
               | (?<False>      false\b   )
               | (?<IntLiteral> \d+       )
+              | (?<Int>        int\b     )
               | (?<Bool>       bool\b    )
               | (?<If>         if\b      )
               | (?<Elseif>     elseif\b  )
@@ -39,13 +54,13 @@ namespace Falak {
               | (?<While>      while\b   )
               | (?<Else>       else\b    )
               | (?<Break>      break\b   )
-              | (?<Var>        var\b     )
               | (?<Inc>        inc\b     )
               | (?<Dec>        dec\b     )
               | (?<Do>         do\b      )
-              | (?<Int>        int\b     )
               | (?<Print>      print\b   )
-              | (?<Identifier> [a-zA-Z]+ )     # Must go after all keywords
+              | (?<Newline>     \n       )
+              | (?<WhiteSpace>  \s       )     # Must go after Newline.
+              | (?<Identifier> ([a-zA-Z]+)([_]?)([0-9]?)+ )     # Must go after all keywords
               | (?<Other>      .         )     # Must be last: match any other character.
             ",
             RegexOptions.IgnorePatternWhitespace
@@ -55,19 +70,33 @@ namespace Falak {
 
         static readonly IDictionary<string, TokenCategory> tokenMap =
             new Dictionary<string, TokenCategory>() {
-                {"Comment", TokenCategory.COMMENT},
+                {"Compare", TokenCategory.COMPARE},
+                {"Assign", TokenCategory.ASSIGN},
                 {"MultiComment", TokenCategory.MULTILINECOMMENT},
-                {"Newline", TokenCategory.NEWLINE},
-                {"WhiteSpace", TokenCategory.WHITESPACE},
+                {"Comment", TokenCategory.COMMENT},
+                {"LessEqual", TokenCategory.LESS_EQUAL},
+                {"MoreEqual", TokenCategory.MORE_EQUAL},
+                {"Different", TokenCategory.DIFFERENT},
+                {"Var", TokenCategory.VAR},
                 {"And", TokenCategory.AND},
                 {"Or", TokenCategory.OR},
                 {"Less", TokenCategory.LESS},
+                {"More", TokenCategory.MORE},
                 {"Plus", TokenCategory.PLUS},
                 {"Mul", TokenCategory.MUL},
-                {"Neg", TokenCategory.NEG},
-                {"ParLeft", TokenCategory.PARENTHESIS_OPEN},
-                {"ParRight", TokenCategory.PARENTHESIS_CLOSE},
-                {"Assign", TokenCategory.ASSIGN},
+                {"Minus", TokenCategory.MINUS},
+                {"Div", TokenCategory.DIV},
+                {"Mod", TokenCategory.MOD},
+                {"Comma", TokenCategory.COMMA},
+                {"Semicolon", TokenCategory.SEMICOLON},
+                {"ParLeft", TokenCategory.PAR_LEFT},
+                {"ParRight", TokenCategory.PAR_RIGHT},
+                {"SquareBracketLeft", TokenCategory.SQUARE_BRACE_LEFT},
+                {"SquareBracketRight", TokenCategory.SQUARE_BRACE_RIGHT},
+                {"CurlyLeft", TokenCategory.CURLY_LEFT},
+                {"CurlyRigth", TokenCategory.CURLY_RIGHT},
+                {"Char", TokenCategory.CHAR},
+                {"String", TokenCategory.STRING},
                 {"True", TokenCategory.TRUE},
                 {"False", TokenCategory.FALSE},
                 {"IntLiteral", TokenCategory.INT_LITERAL},
@@ -78,12 +107,13 @@ namespace Falak {
                 {"While", TokenCategory.WHILE},
                 {"Else", TokenCategory.ELSE},
                 {"Break", TokenCategory.BREAK},
-                {"Var", TokenCategory.VAR},
                 {"Inc", TokenCategory.INC},
                 {"Dec", TokenCategory.DEC},
                 {"Do", TokenCategory.DO},
                 {"Int", TokenCategory.INT},
                 {"Print", TokenCategory.PRINT},
+                {"Newline", TokenCategory.NEWLINE},
+                {"WhiteSpace", TokenCategory.WHITESPACE},
                 {"Identifier", TokenCategory.IDENTIFIER}
             };
 
@@ -100,7 +130,6 @@ namespace Falak {
             foreach (Match m in regex.Matches(input)) {
 
                 if (m.Groups["Newline"].Success) {
-
                     row++;
                     columnStart = m.Index + m.Length;
 
@@ -108,6 +137,16 @@ namespace Falak {
                     || m.Groups["Comment"].Success) {
 
                     // Skip white space and comments.
+
+                } else if (m.Groups ["MultiComment"].Success){
+
+                    MatchCollection multiCommentMatches = Regex.Matches(m.Groups ["MultiComment"].Value, "\n", RegexOptions.Multiline);
+
+                    if(multiCommentMatches.Count > 0){
+                        row += multiCommentMatches.Count;
+                        Match lastMatch = multiCommentMatches[multiCommentMatches.Count - 1];
+                        columnStart = m.Index + lastMatch.Index + lastMatch.Length;
+                    }
 
                 } else if (m.Groups["Other"].Success) {
 
