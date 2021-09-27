@@ -10,7 +10,7 @@ namespace Falak {
             TokenCategory.IDENTIFIER
         };
 
-        static readonly ISet<TokenCategory> firstOfStmt = new HashSet<TokenCategory>(){
+        static readonly ISet<TokenCategory> firstOfStatement = new HashSet<TokenCategory>(){
             TokenCategory.IDENTIFIER,
             TokenCategory.IF,
             TokenCategory.WHILE,
@@ -168,7 +168,7 @@ namespace Falak {
             Expect(TokenCategory.CLOSE_PARENTHESIS);
             Expect(TokenCategory.OPEN_BRACKET);
             VarDefList();
-            StmtList();
+            StatementList();
             Expect(TokenCategory.CLOSE_BRACKET);
         }
 
@@ -184,49 +184,49 @@ namespace Falak {
             }
         }
 
-        public void StmtList(){
-             while(firstOfStmt.Contains(CurrentToken)){
-                Stmt();
+        public void StatementList(){
+             while(firstOfStatement.Contains(CurrentToken)){
+                Statement();
             }
         }
 
-        public void Stmt(){
+        public void Statement(){
             switch(CurrentToken){
                 case TokenCategory.IDENTIFIER:
                     Expect(TokenCategory.IDENTIFIER);
 
                     switch(CurrentToken){
                         case TokenCategory.ASSIGN:
-                            StmtAssign();
+                            StatementAssign();
                             break;
                         case TokenCategory.OPEN_PARENTHESIS:
-                            StmtFunCall();
+                            StatementFunCall();
                             break;
                         
                         default:
-                            throw new SyntaxError(firstOfStmt, tokenStream.Current);
+                            throw new SyntaxError(firstOfStatement, tokenStream.Current);
 
                     }
                 break;
 
                 case TokenCategory.INC:
-                    StmtInc();
+                    StatementInc();
                     break;
 
                 case TokenCategory.DEC:
-                    StmtDec();
+                    StatementDec();
                     break;
 
                 case TokenCategory.IF:
-                    StmtIf();
+                    StatementIf();
                     break;
 
                 case TokenCategory.WHILE:
-                    StmtWhile();
+                    StatementWhile();
                     break;
 
                 case TokenCategory.DO:
-                    StmtDo();
+                    StatementDo();
                     break;
 
                 case TokenCategory.BREAK:
@@ -245,32 +245,30 @@ namespace Falak {
                     break;
 
             default:
-                throw new SyntaxError(firstOfStmt, tokenStream.Current);
-
-
+                throw new SyntaxError(firstOfStatement, tokenStream.Current);
 
             }
         }
 
-        public void StmtAssign(){
+        public void StatementAssign(){
             Expect(TokenCategory.ASSIGN);
             expr();
             Expect(TokenCategory.SEMICOLON);
         }
 
-        public void StmtInc(){
+        public void StaInc(){
             Expect(TokenCategory.INC);
             Expect(TokenCategory.IDENTIFIER);
             Expect(TokenCategory.SEMICOLON);
         }
 
-        public void StmtDec(){
+        public void StatementDec(){
             Expect(TokenCategory.DEC);
             Expect(TokenCategory.IDENTIFIER);
             Expect(TokenCategory.SEMICOLON);
         }
 
-        public void StmtFunCall(){
+        public void StatementFunCall(){
             FunCall();
             Expect(TokenCategory.SEMICOLON);
         }
@@ -291,13 +289,13 @@ namespace Falak {
             }
         }
 
-        public void StmtIf(){
+        public void StatementIf(){
             Expect(TokenCategory.IF);
             Expect(TokenCategory.OPEN_PARENTHESIS);
             expr();
             Expect(TokenCategory.CLOSE_PARENTHESIS);
             Expect(TokenCategory.OPEN_BRACKET);
-            StmtList();
+            StatementList();
             Expect(TokenCategory.CLOSE_BRACKET);
             ElseIf();
             Else();
@@ -310,7 +308,7 @@ namespace Falak {
                 expr();
                 Expect(TokenCategory.CLOSE_PARENTHESIS);
                 Expect(TokenCategory.OPEN_BRACKET);
-                StmtList();
+                StatementList();
                 Expect(TokenCategory.CLOSE_BRACKET);
             }
         }
@@ -319,26 +317,26 @@ namespace Falak {
             if(CurrentToken == TokenCategory.ELSE){
                 Expect(TokenCategory.ELSE);
                 Expect(TokenCategory.OPEN_BRACKET);
-                StmtList();
+                StatementList();
                 Expect(TokenCategory.CLOSE_BRACKET);
             }
         }
 
-        public void StmtWhile(){
+        public void StatementWhile(){
             Expect(TokenCategory.WHILE);
             Expect(TokenCategory.OPEN_PARENTHESIS);
             expr();
             Expect(TokenCategory.CLOSE_PARENTHESIS);
             Expect(TokenCategory.OPEN_BRACKET);
-            StmtList();
+            StatementList();
             Expect(TokenCategory.CLOSE_BRACKET);
         }
 
         
-        public void StmtDo(){
+        public void StatementDo(){
             Expect(TokenCategory.DO);
             Expect(TokenCategory.OPEN_BRACKET);
-            StmtList();
+            StatementList();
             Expect(TokenCategory.CLOSE_BRACKET);
             Expect(TokenCategory.WHILE);
             Expect(TokenCategory.OPEN_PARENTHESIS);
