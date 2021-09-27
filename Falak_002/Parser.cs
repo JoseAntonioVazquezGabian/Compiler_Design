@@ -56,8 +56,8 @@ namespace Falak {
         static readonly ISet<TokenCategory> firstOflit = new HashSet<TokenCategory>(){
             TokenCategory.TRUE,
             TokenCategory.FALSE,
-            TokenCategory.CHAR_LIT,
-            TokenCategory.STRING_LIT,
+            TokenCategory.CHAR,
+            TokenCategory.STRING,
             TokenCategory.INT_LITERAL
         };
 
@@ -68,12 +68,12 @@ namespace Falak {
             TokenCategory.COMPARE,
             TokenCategory.DIFFERENT,
             TokenCategory.LESS_EQUAL,
-            TokenCategory.LESS_THAN,
+            TokenCategory.LESS,
             TokenCategory.MORE_EQUAL,
-            TokenCategory.MORE_THAN,
+            TokenCategory.MORE,
             TokenCategory.PLUS,
             TokenCategory.MINUS,
-            TokenCategory.MULTIPLY,
+            TokenCategory.MUL,
             TokenCategory.DIV,
             TokenCategory.MOD,
             TokenCategory.NOT,
@@ -90,8 +90,8 @@ namespace Falak {
         static readonly ISet<TokenCategory> firstOflist = new HashSet<TokenCategory>(){
             TokenCategory.TRUE,
             TokenCategory.FALSE,
-            TokenCategory.CHAR_LIT,
-            TokenCategory.STRING_LIT,
+            TokenCategory.CHAR,
+            TokenCategory.STRING,
             TokenCategory.INT_LITERAL,
             TokenCategory.OPEN_PARENTHESIS,
             TokenCategory.OPEN_BRACKET,
