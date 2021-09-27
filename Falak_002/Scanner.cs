@@ -26,6 +26,8 @@ namespace Falak {
               | (?<Var>        var\b     )
               | (?<And>         [&][&]   )
               | (?<Or>          [|][|]|[\^]   )
+              | (?<Not>         [!]      )
+              | (?<Xor>         [^]      )
               | (?<Less>        [<]      ) # Agregar todas las variantes antes que este
               | (?<More>        [>]      )
               | (?<Plus>       [+]       )  
@@ -80,6 +82,8 @@ namespace Falak {
                 {"Var", TokenCategory.VAR},
                 {"And", TokenCategory.AND},
                 {"Or", TokenCategory.OR},
+                {"Not", TokenCategory.NOT},
+                {"Xor", TokenCategory.XOR},
                 {"Less", TokenCategory.LESS},
                 {"More", TokenCategory.MORE},
                 {"Plus", TokenCategory.PLUS},

@@ -28,9 +28,9 @@ namespace Falak {
         };
 
         static readonly ISet<TokenCategory> firstOfRel = new HashSet<TokenCategory>(){
-            TokenCategory.LESS_THAN,
+            TokenCategory.LESS,
             TokenCategory.LESS_EQUAL,
-            TokenCategory.MORE_THAN,
+            TokenCategory.MORE,
             TokenCategory.MORE_EQUAL
         };
 
@@ -41,7 +41,7 @@ namespace Falak {
         };
 
         static readonly ISet<TokenCategory> firstOfMul = new HashSet<TokenCategory>(){
-            TokenCategory.MULTIPLY,
+            TokenCategory.MUL,
             TokenCategory.DIV,
             TokenCategory.MOD
         };
@@ -64,6 +64,7 @@ namespace Falak {
         static readonly ISet<TokenCategory> expressions = new HashSet<TokenCategory>(){
             TokenCategory.OR,
             TokenCategory.AND,
+            TokenCategory.XOR,
             TokenCategory.COMPARE,
             TokenCategory.DIFFERENT,
             TokenCategory.LESS_EQUAL,
