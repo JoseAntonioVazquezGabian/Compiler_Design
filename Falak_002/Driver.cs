@@ -1,8 +1,12 @@
+/*
+  Copyright (C) 2021 José Antonio Vázquez, Daniel Trejo y Jaime Orlando López. ITESM CEM
+*/
+
 using System;
 using System.IO;
 using System.Text;
 
-namespace Drac {
+namespace Falak {
 
     public class Driver {
 
@@ -15,9 +19,9 @@ namespace Drac {
 
         //-----------------------------------------------------------
         void PrintAppHeader() {
-            Console.WriteLine("Drac compiler, version " + VERSION);
+            Console.WriteLine("Falak compiler, version " + VERSION);
             Console.WriteLine(
-                "Copyright \u00A9 2021 by O. Morales, J. Martinez, C. Galvan, ITESM CEM.");
+                "Copyright \u00A9 2021 Team 1, ITESM CEM.");
             Console.WriteLine("This program is free software; you may "
                 + "redistribute it under the terms of");
             Console.WriteLine("the GNU General Public License version 3 or "
