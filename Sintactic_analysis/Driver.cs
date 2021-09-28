@@ -14,7 +14,8 @@ namespace Falak {
 
         //-----------------------------------------------------------
         static readonly string[] ReleaseIncludes = {
-            "Lexical analysis"
+            "Lexical analysis",
+            "Syntactic analysis"
         };
 
         //-----------------------------------------------------------
@@ -55,7 +56,7 @@ namespace Falak {
                 var inputPath = args[0];
                 var input = File.ReadAllText(inputPath);
                 var parser = new Parser(
-                    new Scanner(input).Start().GetEnumerator());
+                    new Scanner(input).Scan().GetEnumerator());
                 parser.Program();
                 Console.WriteLine("Syntax OK.");
 

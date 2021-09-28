@@ -18,7 +18,6 @@ namespace Falak {
         AND,
         OR,
         NOT,
-        XOR,
         LESS,
         MORE,
         PLUS,

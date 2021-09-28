@@ -1,9 +1,9 @@
-(* File: 006_next_day.leviathan
+<# File: 006_next_day.falak
    Given the date of a certain day, determines the date of the day after.
    (C) 2021 Ariel Ortiz, ITESM CEM.
-*)
+#>
 
--- Returns true if y is a leap year, otherwise returns false.
+# Returns true if y is a leap year, otherwise returns false.
 is_leap_year(y) {
     if (y % 4 == 0) {
         if (y % 100 == 0) {
@@ -20,7 +20,7 @@ is_leap_year(y) {
     }
  }
 
--- Returns the total number of days in month m of year y.
+# Returns the total number of days in month m of year y.
 number_of_days_in_month(y, m) {
     var result;
     if (m == 2) {
@@ -29,7 +29,7 @@ number_of_days_in_month(y, m) {
         } else {
             result = 28;
         }
-    } elif (m == 4 or m == 6 or m == 9 or m == 11) {
+    } elseif (m == 4 || m == 6 || m == 9 || m == 11) {
         result = 30;
     } else {
         result = 31;
@@ -37,8 +37,8 @@ number_of_days_in_month(y, m) {
     return result;
 }
 
--- Given y, m, d (year, month day), returns the handle of a new array list
--- with the date of the following day.
+# Given y, m, d (year, month day), returns the handle of a new array list
+# with the date of the following day.
 next_day(y, m, d) {
     if (d == number_of_days_in_month(y, m)) {
         if (m == 12) {
@@ -51,7 +51,7 @@ next_day(y, m, d) {
     }
 }
 
--- Prints the given date (y, m, d) and the date of the following day.
+# Prints the given date (y, m, d) and the date of the following day.
 print_next_day(y, m, d) {
     var next;
     prints("The day after ");

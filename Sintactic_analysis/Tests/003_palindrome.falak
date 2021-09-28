@@ -1,15 +1,15 @@
-(* File: 003_palindrome.leviathan
+<# File: 003_palindrome.falak
    Determines if a string is a palindrome.
    (C) 2021 Ariel Ortiz, ITESM CEM.
-*)
+#>
 
--- Returns true if str is a palindrome, false otherwise.
+# Returns true if str is a palindrome, false otherwise.
 is_palindrome(str) {
     var start, finish;
     start = 0;
     finish = size(str) - 1;
     while (start < finish) {
-        if (get(str, start) <> get(str, finish)) {
+        if (get(str, start) != get(str, finish)) {
             return false;
         }
         inc start;
@@ -26,7 +26,7 @@ main() {
         prints("The string \"");
         prints(str);
         prints("\" is ");
-        if (not is_palindrome(str)) {
+        if (!is_palindrome(str)) {
             prints("NOT ");
         }
         prints("a palindrome.\n");
@@ -37,5 +37,5 @@ main() {
         } else {
             option = get(option, 0);
         }
-    } while (option == 'Y' or option == 'y');
+    } while (option == 'Y' || option == 'y');
 }

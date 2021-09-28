@@ -1,8 +1,8 @@
-(* File: breaks.leviathan
+<# File: breaks.falak
    Verifies that the implementation of the break statement meets the
    specified requirements.
    (C) 2021 Ariel Ortiz, ITESM CEM.
- *)
+ #>
 
 sqr(x) {
     return x * x;
@@ -30,12 +30,12 @@ main() {
                 inc j;
                 if (j > x) {
                     break;
-                } elif (x == j) {
+                } elseif (x == j) {
                     sum = sum + x;
-                } elif (x % j == 0) {
+                } elseif (x % j == 0) {
                     break;
                 }
-            } while (2 + 2 <> 5);
+            } while (2 + 2 != 5);
         }
     }
     if (sum == 88) {

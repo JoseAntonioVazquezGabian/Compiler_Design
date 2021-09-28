@@ -1,15 +1,15 @@
-(* File: operators.leviathan
+<# File: operators.falak
    Verifies that the implementation of all the operators
    meet the specified requirements.
    (C) 2021 Ariel Ortiz, ITESM CEM.
-*)
+#>
 
 var fails;
 var asserts;
 
 assert(value1, value2, message) {
     inc asserts;
-    if (value1 <> value2) {
+    if (value1 != value2) {
         inc fails;
         prints("Assertion failure: ");
         prints(message);
@@ -17,21 +17,21 @@ assert(value1, value2, message) {
     }
 }
 
--- By default a function returns 0.
+# By default a function returns 0.
 some_fun() {
 }
 
--- Always returns true
+# Always returns true
 true_fun() {
     return true;
 }
 
--- Always returns false
+# Always returns false
 false_fun() {
     return false;
 }
 
--- Should never be called
+# Should never be called
 never_called() {
     assert(false, true, "error in short circuit operator");
 }
@@ -71,26 +71,36 @@ main() {
     assert(-118, -80 - 38, "error in substraction");
     assert(-42, -80 - -38, "error in substraction");
 
-    assert(0, not true, "error in logical NOT");
-    assert(1, not false, "error in logical NOT");
-    assert(0, not not not true, "error in logical NOT");
+    assert(0, !true, "error in logical NOT");
+    assert(1, !false, "error in logical NOT");
+    assert(0, !!!true, "error in logical NOT");
 
-    assert(0, false and false, "error in logical AND");
-    assert(0, true and false, "error in logical AND");
-    assert(0, false and true, "error in logical AND");
-    assert(1, true and true, "error in logical AND");
-    assert(0, false_fun() and never_called(), "error in logical AND");
+    assert(0, false && false, "error in logical AND");
+    assert(0, true && false, "error in logical AND");
+    assert(0, false && true, "error in logical AND");
+    assert(1, true && true, "error in logical AND");
+    assert(0, false_fun() && never_called(), "error in logical AND");
 
-    assert(0, false or false, "error in logical OR");
-    assert(1, true or false, "error in logical OR");
-    assert(1, false or true, "error in logical OR");
-    assert(1, true or true, "error in logical OR");
-    assert(1, true_fun() or never_called(), "error in logical OR");
+    assert(0, false || false, "error in logical OR");
+    assert(1, true || false, "error in logical OR");
+    assert(1, false || true, "error in logical OR");
+    assert(1, true || true, "error in logical OR");
+    assert(1, true_fun() || never_called(), "error in logical OR");
+
+    assert(0, false ^ false, "error in logical XOR");
+    assert(1, true ^ false, "error in logical XOR");
+    assert(1, false ^ true, "error in logical XOR");
+    assert(0, true ^ true, "error in logical XOR");
+
+    assert(false, 0 ^ 0, "error in logical XOR");
+    assert(true, 6 * 7 ^ 0, "error in logical XOR");
+    assert(true, 6 - 3 * 2 ^ 40 + 2, "error in logical XOR");
+    assert(false, 7 ^ 2 * 21, "error in logical XOR");
 
     assert(1, 42 == 42, "error in equal to");
     assert(0, 42 == 43, "error in equal to");
-    assert(1, 42 <> 43, "error in not equal to");
-    assert(0, 42 <> 42, "error in not equal to");
+    assert(1, 42 != 43, "error in not equal to");
+    assert(0, 42 != 42, "error in not equal to");
     assert(1, 43 > 42, "error in greater than");
     assert(0, 42 > 42, "error in greater than");
     assert(1, 42 < 43, "error in less than");

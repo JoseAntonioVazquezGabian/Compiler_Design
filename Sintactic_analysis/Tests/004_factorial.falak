@@ -1,9 +1,9 @@
-(* File: 004_factorial.leviathan
+<# File: 004_factorial.falak
    Computes factorials using iteration and recursion.
    (C) 2021 Ariel Ortiz, ITESM CEM.
-*)
+#>
 
--- Iterative version for computing factorial of n.
+# Iterative version for computing factorial of n.
 iterative_factorial(n) {
     var result, i;
     result = 1;
@@ -15,7 +15,7 @@ iterative_factorial(n) {
     return result;
 }
 
--- Recursive version for computing factorial of n.
+# Recursive version for computing factorial of n.
 recursive_factorial(n) {
     if (n <= 0) {
         return 1;
@@ -42,5 +42,5 @@ main() {
         } else {
             option = get(option, 0);
         }
-    } while (option == 'Y' or option == 'y');
+    } while (option == 'Y' || option == 'y');
 }

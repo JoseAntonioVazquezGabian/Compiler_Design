@@ -1,13 +1,13 @@
-(* File: 007_literals.leviathan
+<# File: 007_literals.falak
    Verifies that the implementation of literal values meet the specified
    requirements.
    (C) 2021 Ariel Ortiz, ITESM CEM.
-*)
+#>
 
 var fails;
 
 assert(value1, value2, message) {
-    if (value1 <> value2) {
+    if (value1 != value2) {
         inc fails;
         prints("Assertion failure: ");
         prints(message);

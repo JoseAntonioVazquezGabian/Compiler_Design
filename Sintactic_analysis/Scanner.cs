@@ -27,7 +27,6 @@ namespace Falak {
               | (?<And>         [&][&]   )
               | (?<Or>          [|][|]|[\^]   )
               | (?<Not>         [!]      )
-              | (?<Xor>         [^]      )
               | (?<Less>        [<]      ) # Agregar todas las variantes antes que este
               | (?<More>        [>]      )
               | (?<Plus>       [+]       )  
@@ -41,7 +40,7 @@ namespace Falak {
               | (?<ParRight>   [)]       )
               | (?<SquareBracketLeft> [\[]  )
               | (?<SquareBracketRight> [\]] )
-              | (?<CurlyRigth>  [}]      )
+              | (?<CurlyRight>  [}]      )
               | (?<CurlyLeft>   [{]      )
               | (?<Char>    [']([\\]([nrt\'\\""\\]|u[\dA-Fa-f]{6})|[^\\])['] )
               | (?<String>) ""([^""\n\\]|\\([nrt\\'""]|u[0-9a-fA-F]{6}))*""
@@ -62,7 +61,7 @@ namespace Falak {
               | (?<Print>      print\b   )
               | (?<Newline>     \n       )
               | (?<WhiteSpace>  \s       )     # Must go after Newline.
-              | (?<Identifier> ([a-zA-Z]+)([_]?)([0-9]?)+ )     # Must go after all keywords
+              | (?<Identifier> ([a-zA-Z_]+)([0-9a-zA-Z_]?)+ )     # Must go after all keywords
               | (?<Other>      .         )     # Must be last: match any other character.
             ",
             RegexOptions.IgnorePatternWhitespace
@@ -83,7 +82,6 @@ namespace Falak {
                 {"And", TokenCategory.AND},
                 {"Or", TokenCategory.OR},
                 {"Not", TokenCategory.NOT},
-                {"Xor", TokenCategory.XOR},
                 {"Less", TokenCategory.LESS},
                 {"More", TokenCategory.MORE},
                 {"Plus", TokenCategory.PLUS},
@@ -98,7 +96,7 @@ namespace Falak {
                 {"SquareBracketLeft", TokenCategory.SQUARE_BRACE_LEFT},
                 {"SquareBracketRight", TokenCategory.SQUARE_BRACE_RIGHT},
                 {"CurlyLeft", TokenCategory.CURLY_LEFT},
-                {"CurlyRigth", TokenCategory.CURLY_RIGHT},
+                {"CurlyRight", TokenCategory.CURLY_RIGHT},
                 {"Char", TokenCategory.CHAR},
                 {"String", TokenCategory.STRING},
                 {"True", TokenCategory.TRUE},

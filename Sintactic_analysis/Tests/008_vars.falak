@@ -1,7 +1,7 @@
-(* File: vars.leviathan
+<# File: vars.falak
    Example using global and local variables.
    (C) 2021 Ariel Ortiz, ITESM CEM.
-*)
+#>
 
 var a;
 
@@ -44,7 +44,7 @@ main() {
     println();
 }
 
-(*
+<#
 
 This program should print:
 
@@ -58,4 +58,4 @@ b = 2
 c = 3
 x = 4
 
-*)
+#>

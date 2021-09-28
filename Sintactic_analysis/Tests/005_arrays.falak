@@ -1,9 +1,9 @@
-(* File: 005_arrays.leviathan
+<# File: 005_arrays.falak
    Implementation of typical array operations.
    (C) 2021 Ariel Ortiz, ITESM CEM.
-*)
+#>
 
--- Prints all the elements in the array list referred by handle a.
+# Prints all the elements in the array list referred by handle a.
 print_array(a) {
     var first, i, n;
     first = true;
@@ -22,7 +22,7 @@ print_array(a) {
     printc(']');
 }
 
--- Returns the addition of all elements in the array list referred by handle a.
+# Returns the addition of all elements in the array list referred by handle a.
 sum_array(a) {
     var sum, i, n;
     sum = 0;
@@ -35,7 +35,7 @@ sum_array(a) {
     return sum;
 }
 
--- Returns the largest element in the array list referred by handle a.
+# Returns the largest element in the array list referred by handle a.
 max_array(a) {
     var max, i, n, x;
     max = get(a, 0);
@@ -51,11 +51,11 @@ max_array(a) {
     return max;
 }
 
--- Sorts in-place the elements in the array list referred by handle a.
-sort_array(a) {            -----------------------------------------
-    var i, j, t, n, swap;  -- THIS FUNCTION IMPLEMENTS THE BUBBLE --
-    n = size(a);           -- SORT ALGORITHM.                     --
-    i = 0;                 -----------------------------------------
+# Sorts in-place the elements in the array list referred by handle a.
+sort_array(a) {            #######################################
+    var i, j, t, n, swap;  # THIS FUNCTION IMPLEMENTS THE BUBBLE #
+    n = size(a);           # SORT ALGORITHM.                     #
+    i = 0;                 #######################################
     while (i < n - 1) {
         j = 0;
         swap = false;
@@ -68,7 +68,7 @@ sort_array(a) {            -----------------------------------------
             }
             inc j;
         }
-        if (not swap) { -- Stop when no more swaps were carried out.
+        if (!swap) { # Stop when no more swaps were carried out.
             break;
         }
         inc i;
